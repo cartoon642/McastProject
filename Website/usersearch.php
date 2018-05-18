@@ -7,7 +7,7 @@ if( isset( $_SESSION['username'] ) ){
     
 }
 else{
-    header( "Location: http://localhost:8084/PHPSQLREVISION/project.php");
+    header( "Location: http://localhost/PHPSQLREVISION/project.php");
 }
 ?>
 <!DOCTYPE html>
@@ -39,6 +39,11 @@ else{
         <a name = "logout"class="nav-link" href="project.php">Log out</a>
            
       </li>
+         <li class="nav-item">
+            
+        <a name = "logout"class="nav-link" href="contact.php">Contact Us</a>
+           
+      </li>
       <li class="nav-item">
     </ul>
   </div>
@@ -57,12 +62,12 @@ else{
      $username = $_SESSION["username"];
 	if (isset($_POST['submit'])) {
 		$search= $_POST['search'];
-        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3307') or die('Cannot connect to DB');	 
+        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
         $query = "select username from users where username like '%$search%'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
          while($row = mysqli_fetch_row($result)) {
-            echo "<a href='http://localhost:8084/PHPSQLREVISION/user.php?id=$row[0]'>$row[0]</a>";
+            echo "<a href='http://localhost/PHPSQLREVISION/user.php?id=$row[0]'>$row[0]</a>";
             
             }
         

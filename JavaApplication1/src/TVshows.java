@@ -25,7 +25,7 @@ public class TVshows extends javax.swing.JFrame {
 public boolean checkshows(String name, String username){
     try{           
        Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/projectdatabase?" + "user=root&password=");     
+       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdatabase?" + "user=root&password=");     
        PreparedStatement pst = conn.prepareStatement("Select * from reviews where username=? and tvshowname=?"); 
        pst.setString(1, username);
        pst.setString(2, name);

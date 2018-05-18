@@ -36,7 +36,7 @@ public class Login extends javax.swing.JFrame {
 private boolean validate_login(String username,String password) {
    try{           
        Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/projectdatabase?" + "user=root&password=");     
+       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdatabase?" + "user=root&password=");     
        PreparedStatement pst = conn.prepareStatement("Select * from users where username=? and password=?");
        pst.setString(1, username); 
        pst.setString(2, password);
@@ -197,7 +197,7 @@ getContentPane().setBackground(new java.awt.Color(204, 166, 166));
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-    Desktop.getDesktop().browse(new URL("http://localhost:8084/PHPSQLREVISION/RegisterPage.php").toURI());
+    Desktop.getDesktop().browse(new URL("http://localhost/PHPSQLREVISION/RegisterPage.php").toURI());
 } catch (Exception e) {}    
     }//GEN-LAST:event_jButton2ActionPerformed
 

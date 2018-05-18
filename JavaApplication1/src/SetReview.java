@@ -44,7 +44,7 @@ public int change_boolean(boolean completed){
 private void insert_review(String username,String tvshowname, int episodeswatched, int rating, String comment,int completed ) {
    try{           
        Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/projectdatabase?" + "user=root&password=");     
+       Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdatabase?" + "user=root&password=");     
        PreparedStatement pst = conn.prepareStatement("INSERT INTO reviews (username, tvshowname, rating, comment, `watched episodes`, Completed) VALUES (?, ?, ?, ?, ?, ?)");
        pst.setString(1, username); 
        pst.setString(2, tvshowname);
