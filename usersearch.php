@@ -1,12 +1,13 @@
 <?php
 session_start();
+
 ?>
 <?php
 if( isset( $_SESSION['username'] ) ){
     
 }
 else{
-    header( "Location: http://localhost:8084/PHPSQLREVISION/project.php");
+    header( "Location: http://localhost/PHPSQLREVISION/project.php");
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +30,7 @@ else{
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-     
+      
       <li class="nav-item">
         <a class="nav-link" href="loggedin.php">Your Profile</a>
       </li>
@@ -47,40 +48,38 @@ else{
     </ul>
   </div>
 </nav>
-    <form method="post" action ="usersearch.php" class="form-inline">
+  <form method="post" action ="usersearch.php" class="form-inline">
     <input class="form-control mr-sm-2" type="search" name ="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" name = "submit" type="submit">Search</button>
   </form>
+            
 </nav>
 <div class="jumbotron">
-    <?php  $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-      $show = $_GET['id'];
-        $query = "SELECT * FROM `tvshows` where tvshowname = '$show'";
-       $result = mysqli_query($conn, $query)
-or die("Error in query: ". mysqli_error($conn));    
-        while($row = mysqli_fetch_row($result)) {
-            echo "<img src='$row[3]' style = 'float:left;'>";
-}?>
-    
-  <h1 class="display-4"><?php echo $_GET['id'];?></h1>
+  <h1 class="display-4">Usernames matching that name</h1>
   <p class="lead"></p>
   <hr class="my-4">
   <p><?php
-      $username = $_SESSION["username"];
-      $show = $_GET['id'];
-		
-        //Connect to db
-        
-        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "SELECT * FROM `tvshows` where tvshowname = '$show'";
+     $username = $_SESSION["username"];
+	if (isset($_POST['submit'])) {
+		$search= $_POST['search'];
+        require_once("conn.php"); 
+        $query = "select username from users where username like '%$search%'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
-        while($row = mysqli_fetch_row($result)) {
-            echo "<br><br><br>seasons: $row[1]<br> Description: $row[2]<br><br /><br /><hr class='my-4'>";
-}
+         while($row = mysqli_fetch_row($result)) {
+            echo "<a href='http://localhost/PHPSQLREVISION/user.php?id=$row[0]'>$row[0]</a>";
+            
+            }
+        
+        
+    }
+        
+        
+        
+		
+
       ?>
     </p>
 </div>
     </body>
 </html>
-

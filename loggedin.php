@@ -11,7 +11,7 @@ else{
 ?>
 
         <?php
-
+require_once("conn.php");
  if (isset($_POST['logout'])) {
   session_start();
 session_destroy();
@@ -23,7 +23,7 @@ exit;
 if (isset($_POST['submitname'])) {
     $name = $_POST['name'];
     $username = $_SESSION['username'];
-            $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+            
         $query = "UPDATE `users` SET `Name` = '$name' WHERE `users`.`username` = '$username'";
         $result = mysqli_query($conn, $query);            
  header("Refresh:0");
@@ -33,7 +33,7 @@ if (isset($_POST['submitname'])) {
         if (isset($_POST['submitcountry'])) {
     $country = $_POST['country'];
     $username = $_SESSION['username'];
-            $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+     
         $query = "UPDATE `users` SET `Country` = '$country' WHERE `users`.`username` = '$username'";
         $result = mysqli_query($conn, $query);
            header("Refresh:0");
@@ -44,7 +44,7 @@ if (isset($_POST['submitname'])) {
         if (isset($_POST['submitfavourite'])) {
     $favourite = $_POST['favourite'];
     $username = $_SESSION['username'];
-            $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+      
         $query = "UPDATE `users` SET `Favourite` = '$favourite' WHERE `users`.`username` = '$username'";
         $result = mysqli_query($conn, $query);
            header("Refresh:0");
@@ -100,7 +100,7 @@ if (isset($_POST['submitname'])) {
     <?php
     $fav = "";
     $username = $_SESSION["username"];
-    $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+
         $query = "select Favourite from users where username = '$username'";
        $result = mysqli_query($conn, $query)
         or die("Error in query: ". mysqli_error($conn));    
@@ -113,7 +113,7 @@ if (isset($_POST['submitname'])) {
           }
       }
       if(!($fav == "")){
-      $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+    	 
         $query = "SELECT * FROM `tvshows` where tvshowname = '$fav'";
        $result = mysqli_query($conn, $query)
         or die("Error in query: ". mysqli_error($conn));    
@@ -131,7 +131,7 @@ if (isset($_POST['submitname'])) {
     
     <?php
     $username = $_SESSION["username"];
-    $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+
         $query = "select * from users where username = '$username'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
@@ -241,9 +241,7 @@ or die("Error in query: ". mysqli_error($conn));
       $username = $_SESSION["username"];
 
 		
-        //Connect to db
-        
-        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+
         $query = "select * from reviews where username = '$username'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    

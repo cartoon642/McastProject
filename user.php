@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 <?php
 if( isset( $_SESSION['username'] ) ){
@@ -48,38 +47,75 @@ else{
     </ul>
   </div>
 </nav>
-  <form method="post" action ="usersearch.php" class="form-inline">
+    <form method="post" action ="usersearch.php" class="form-inline">
     <input class="form-control mr-sm-2" type="search" name ="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" name = "submit" type="submit">Search</button>
   </form>
-            
 </nav>
 <div class="jumbotron">
-  <h1 class="display-4">Usernames matching that name</h1>
+     <?php
+   $fav = "";
+    $user = $_GET["id"];
+    $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+        $query = "select Favourite from users where username = '$user'";
+       $result = mysqli_query($conn, $query)
+        or die("Error in query: ". mysqli_error($conn));    
+      while($row = mysqli_fetch_row($result)) {
+       if ($row[0] == ""){
+           
+       }
+          else{
+              $fav = $row[0];
+          }
+      }
+      if(!($fav == "")){
+      
+        $query = "SELECT * FROM `tvshows` where tvshowname = '$fav'";
+       $result = mysqli_query($conn, $query)
+        or die("Error in query: ". mysqli_error($conn));    
+      while($row = mysqli_fetch_row($result)) {
+       echo "<img src='$row[3]' style = 'float:left;'><br><h1>Favourite tv show: $fav </h1><br><br><br>";   
+      }
+      }
+      ?>
+    
+    <?php
+    $user = $_GET['id'];
+   
+        $query = "select * from users where username = '$user'";
+       $result = mysqli_query($conn, $query)
+or die("Error in query: ". mysqli_error($conn));    
+        while($row = mysqli_fetch_row($result)) {
+    echo "<div style=''>
+			<h3>User Info</h3>
+            <table>
+    <tr><td> <p style =' padding-right: 50px;float:left;'>name: $row[2]  </p>
+    
+            <br>
+    <tr><td><p style ='clear:both; padding-right: 50px;float:left;'>country: $row[3] </p>
+
+    </table>";
+        }
+        ?>
+  <h1 class="display-4" style = "clear:both;">Users reviews listed below</h1>
   <p class="lead"></p>
   <hr class="my-4">
   <p><?php
-     $username = $_SESSION["username"];
-	if (isset($_POST['submit'])) {
-		$search= $_POST['search'];
-        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "select username from users where username like '%$search%'";
+      $username = $_SESSION["username"];
+      $user = $_GET['id'];
+		
+        //Connect to db
+       
+        $query = "select * from reviews where username = '$user'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
-         while($row = mysqli_fetch_row($result)) {
-            echo "<a href='http://localhost/PHPSQLREVISION/user.php?id=$row[0]'>$row[0]</a>";
-            
-            }
-        
-        
-    }
-        
-        
-        
-		
-
+        while($row = mysqli_fetch_row($result)) {
+            echo " <a href='http://localhost:8084/PHPSQLREVISION/tvshowsearch.php?id=$row[2]'><h1>$row[2]</h1></a><br> Rating: $row[3]<br> Comment: $row[4] <br /><br /><hr class='my-4'>";
+}
       ?>
     </p>
 </div>
     </body>
 </html>
+
+

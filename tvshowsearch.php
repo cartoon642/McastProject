@@ -6,7 +6,7 @@ if( isset( $_SESSION['username'] ) ){
     
 }
 else{
-    header( "Location: http://localhost/PHPSQLREVISION/project.php");
+    header( "Location: http://localhost:8084/PHPSQLREVISION/project.php");
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ else{
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      
+     
       <li class="nav-item">
         <a class="nav-link" href="loggedin.php">Your Profile</a>
       </li>
@@ -53,70 +53,31 @@ else{
   </form>
 </nav>
 <div class="jumbotron">
-     <?php
-   $fav = "";
-    $user = $_GET["id"];
-    $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "select Favourite from users where username = '$user'";
-       $result = mysqli_query($conn, $query)
-        or die("Error in query: ". mysqli_error($conn));    
-      while($row = mysqli_fetch_row($result)) {
-       if ($row[0] == ""){
-           
-       }
-          else{
-              $fav = $row[0];
-          }
-      }
-      if(!($fav == "")){
-      $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "SELECT * FROM `tvshows` where tvshowname = '$fav'";
-       $result = mysqli_query($conn, $query)
-        or die("Error in query: ". mysqli_error($conn));    
-      while($row = mysqli_fetch_row($result)) {
-       echo "<img src='$row[3]' style = 'float:left;'><br><h1>Favourite tv show: $fav </h1><br><br><br>";   
-      }
-      }
-      ?>
-    
-    <?php
-    $user = $_GET['id'];
-    $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "select * from users where username = '$user'";
+    <?php  $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
+      $show = $_GET['id'];
+        $query = "SELECT * FROM `tvshows` where tvshowname = '$show'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
         while($row = mysqli_fetch_row($result)) {
-    echo "<div style=''>
-			<h3>User Info</h3>
-            <table>
-    <tr><td> <p style =' padding-right: 50px;float:left;'>name: $row[2]  </p>
+            echo "<img src='$row[3]' style = 'float:left;'>";
+}?>
     
-            <br>
-    <tr><td><p style ='clear:both; padding-right: 50px;float:left;'>country: $row[3] </p>
-
-    </table>";
-        }
-        ?>
-  <h1 class="display-4" style = "clear:both;">Users reviews listed below</h1>
+  <h1 class="display-4"><?php echo $_GET['id'];?></h1>
   <p class="lead"></p>
   <hr class="my-4">
   <p><?php
       $username = $_SESSION["username"];
-      $user = $_GET['id'];
-		
-        //Connect to db
-        
-        $conn = mysqli_connect('localhost', 'root','','projectdatabase','3306') or die('Cannot connect to DB');	 
-        $query = "select * from reviews where username = '$user'";
+      $show = $_GET['id'];
+
+        $query = "SELECT * FROM `tvshows` where tvshowname = '$show'";
        $result = mysqli_query($conn, $query)
 or die("Error in query: ". mysqli_error($conn));    
         while($row = mysqli_fetch_row($result)) {
-            echo " <a href='http://localhost:8084/PHPSQLREVISION/tvshowsearch.php?id=$row[2]'><h1>$row[2]</h1></a><br> Rating: $row[3]<br> Comment: $row[4] <br /><br /><hr class='my-4'>";
+            echo "<br><br><br>seasons: $row[1]<br> Description: $row[2]<br><br /><br /><hr class='my-4'>";
 }
       ?>
     </p>
 </div>
     </body>
 </html>
-
 
